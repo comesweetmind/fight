@@ -1,20 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://d028nmm3cymuh"]
+[gd_scene load_steps=7 format=3 uid="uid://d028nmm3cymuh"]
 
 [ext_resource type="Texture2D" uid="uid://by4qb4f7ryw0v" path="res://Brawlhall_assets/Brawlball/Brawlball_Plat1.png" id="1_4wuf8"]
 [ext_resource type="Texture2D" uid="uid://cknsent0ok14x" path="res://Brawlhall_assets/Brawlball/Brawlball_Plat2.png" id="2_s02eq"]
+[ext_resource type="Texture2D" uid="uid://msnpor6j2x8c" path="res://icon.svg" id="3_s02eq"]
+[ext_resource type="Script" uid="uid://dxllnqqnavt25" path="res://player.gd" id="3_t8dge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t8dge"]
+size = Vector2(686, 214)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s02eq"]
+size = Vector2(128, 128)
 
 [node name="test_map" type="Node2D"]
 
-[node name="BrawlballPlat1" type="Sprite2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="BrawlballPlat1" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(395.75, 485)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_4wuf8")
 
-[node name="BrawlballPlat2" type="Sprite2D" parent="."]
+[node name="BrawlballPlat2" type="Sprite2D" parent="StaticBody2D"]
 position = Vector2(741.75, 485)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_s02eq")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(557, 485)
+shape = SubResource("RectangleShape2D_t8dge")
+
 [node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(294, 300)
+scale = Vector2(0.35265, 0.35265)
+script = ExtResource("3_t8dge")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("3_s02eq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_s02eq")
