@@ -1,41 +1,85 @@
-[gd_scene load_steps=7 format=3 uid="uid://d028nmm3cymuh"]
+[gd_scene load_steps=9 format=3 uid="uid://d028nmm3cymuh"]
 
 [ext_resource type="Texture2D" uid="uid://by4qb4f7ryw0v" path="res://Brawlhall_assets/Brawlball/Brawlball_Plat1.png" id="1_4wuf8"]
 [ext_resource type="Texture2D" uid="uid://cknsent0ok14x" path="res://Brawlhall_assets/Brawlball/Brawlball_Plat2.png" id="2_s02eq"]
-[ext_resource type="Texture2D" uid="uid://msnpor6j2x8c" path="res://icon.svg" id="3_s02eq"]
-[ext_resource type="Script" uid="uid://dxllnqqnavt25" path="res://player.gd" id="3_t8dge"]
+[ext_resource type="PackedScene" uid="uid://bp4a7fratocof" path="res://player.tscn" id="2_t8dge"]
+[ext_resource type="Texture2D" uid="uid://bam7on8rb8txd" path="res://Brawlhall_assets/Brawlball/144034.png" id="5_qgarv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8dge"]
 size = Vector2(686, 214)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s02eq"]
-size = Vector2(128, 128)
+[sub_resource type="GDScript" id="GDScript_t8dge"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_body_exited(body: Node2D) -> void:
+	die(body)
+
+func die(body: Node2D) -> void:
+	body.queue_free()
+	
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgarv"]
+size = Vector2(1506.5, 686)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0pc2"]
+size = Vector2(326, 180)
 
 [node name="test_map" type="Node2D"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scale = Vector2(0.67317, 0.67317)
+scroll_offset = Vector2(592, 1066)
 
-[node name="BrawlballPlat1" type="Sprite2D" parent="StaticBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("5_qgarv")
+
+[node name="Player" parent="." instance=ExtResource("2_t8dge")]
+position = Vector2(294, 300)
+
+[node name="Platform" type="StaticBody2D" parent="."]
+
+[node name="BrawlballPlat1" type="Sprite2D" parent="Platform"]
 position = Vector2(395.75, 485)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_4wuf8")
 
-[node name="BrawlballPlat2" type="Sprite2D" parent="StaticBody2D"]
+[node name="BrawlballPlat2" type="Sprite2D" parent="Platform"]
 position = Vector2(741.75, 485)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_s02eq")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform"]
 position = Vector2(557, 485)
 shape = SubResource("RectangleShape2D_t8dge")
 
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(294, 300)
-scale = Vector2(0.35265, 0.35265)
-script = ExtResource("3_t8dge")
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-264, 252)
+script = SubResource("GDScript_t8dge")
 
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("3_s02eq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(863.75, 39)
+shape = SubResource("RectangleShape2D_qgarv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("RectangleShape2D_s02eq")
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(85, 213)
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+scale = Vector2(0.434579, 0.434579)
+texture = ExtResource("1_4wuf8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_r0pc2")
+
+[connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]
