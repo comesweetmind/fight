@@ -1,17 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://bp4a7fratocof"]
+[gd_scene load_steps=8 format=3 uid="uid://bp4a7fratocof"]
 
 [ext_resource type="Script" uid="uid://bcwmrpgbx50ly" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://msnpor6j2x8c" path="res://icon.svg" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://c8x15ofpgq51o" path="res://Спрайт-0002.png" id="2_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://cungcw08lp62q" path="res://assets/Charster/rayman_a1 2-fotor-bg-remover-2025080918415.png" id="2_sweqy"]
+[ext_resource type="Texture2D" uid="uid://c3pi1hjhwnn5e" path="res://assets/Charster/eas.png" id="3_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://besupbqvr8gpu" path="res://assets/Charster/rayman_a1 4.png" id="4_1jxqw"]
+[ext_resource type="Texture2D" uid="uid://4jnfvoxnty58" path="res://assets/Charster/body.png" id="5_dw050"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s02eq"]
-size = Vector2(128, 128)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1jxqw"]
+size = Vector2(129.957, 129.957)
 
 [node name="Player" type="CharacterBody2D"]
-scale = Vector2(0.35265, 0.35265)
+scale = Vector2(0.369353, 0.369353)
 script = ExtResource("1_onrkg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_i3pqv")
+scale = Vector2(8.03991, 8.03991)
+texture = ExtResource("2_2hs0m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_s02eq")
+shape = SubResource("RectangleShape2D_1jxqw")
+
+[node name="PartsSkeletonContainer" type="Node2D" parent="."]
+visible = false
+
+[node name="Parts" type="Node2D" parent="PartsSkeletonContainer"]
+
+[node name="Head" type="Sprite2D" parent="PartsSkeletonContainer/Parts"]
+texture = ExtResource("2_sweqy")
+
+[node name="sss2" type="Sprite2D" parent="PartsSkeletonContainer/Parts"]
+position = Vector2(-29.7818, -21.6595)
+texture = ExtResource("3_2hs0m")
+
+[node name="sss" type="Sprite2D" parent="PartsSkeletonContainer/Parts"]
+position = Vector2(-54.1487, -27.0744)
+texture = ExtResource("4_1jxqw")
+
+[node name="sss3" type="Sprite2D" parent="PartsSkeletonContainer/Parts"]
+position = Vector2(-43.319, 170.569)
+texture = ExtResource("5_dw050")

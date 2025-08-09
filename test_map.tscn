@@ -1,9 +1,37 @@
-[gd_scene load_steps=9 format=3 uid="uid://d028nmm3cymuh"]
+[gd_scene load_steps=10 format=3 uid="uid://d028nmm3cymuh"]
 
 [ext_resource type="Texture2D" uid="uid://by4qb4f7ryw0v" path="res://Brawlhall_assets/Brawlball/Brawlball_Plat1.png" id="1_4wuf8"]
 [ext_resource type="Texture2D" uid="uid://cknsent0ok14x" path="res://Brawlhall_assets/Brawlball/Brawlball_Plat2.png" id="2_s02eq"]
 [ext_resource type="PackedScene" uid="uid://bp4a7fratocof" path="res://player.tscn" id="2_t8dge"]
 [ext_resource type="Texture2D" uid="uid://bam7on8rb8txd" path="res://Brawlhall_assets/Brawlball/144034.png" id="5_qgarv"]
+
+[sub_resource type="GDScript" id="GDScript_qgarv"]
+script/source = "extends Camera2D
+
+@export var target: NodePath
+@export var smooth_speed: float = 8.0
+@export var enable_smoothing: bool = true
+
+func _ready():
+	pass
+	#current = true
+
+func _physics_process(delta: float) -> void:
+	if not target:
+		return
+	var t = get_node_or_null(target)
+	if not t:
+		return
+
+	# Позиція-ціль (світові координати)
+	var target_pos = t.global_position
+
+	if enable_smoothing:
+		# Плавно під'їжджаємо (lerp)
+		global_position = global_position.lerp(target_pos, clamp(smooth_speed * delta, 0.0, 1.0))
+	else:
+		global_position = target_pos
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8dge"]
 size = Vector2(686, 214)
@@ -37,6 +65,12 @@ size = Vector2(1506.5, 686)
 size = Vector2(326, 180)
 
 [node name="test_map" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(292, 299)
+script = SubResource("GDScript_qgarv")
+target = NodePath("../Player")
+smooth_speed = 9.0
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scale = Vector2(0.67317, 0.67317)
